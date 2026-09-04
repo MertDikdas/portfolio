@@ -35,36 +35,6 @@ const projects = [
     },
 
     {
-        title: "TaskForge",
-        type: "Backend / Async Processing",
-        description:
-            "A backend job-processing system designed to execute asynchronous tasks reliably. It uses separate API and worker services, with retry and dead-letter mechanisms for failed jobs.",
-
-        technologies: [
-            "Java",
-            "Spring Boot",
-            "PostgreSQL",
-            "RabbitMQ",
-            "Flyway",
-        ],
-
-        repository: "https://github.com/MertDikdas/TaskForge",
-
-        image: null,
-        imageAlt: "",
-
-        highlights: [
-            "Separate API and worker services",
-            "Asynchronous job processing with RabbitMQ",
-            "Retry mechanism for failed jobs",
-            "Dead-letter queue handling for unrecoverable jobs",
-        ],
-
-        architecture:
-            "API Service → RabbitMQ → Worker Service → Retry Queue / Dead-Letter Queue",
-    },
-
-    {
         title: "Opti-Tour",
         type: "Travel App / Microservices",
         description:
@@ -122,6 +92,35 @@ const projects = [
 
         architecture:
             "Flutter mobile client → FastAPI backend API",
+    },
+    {
+        title: "TaskForge",
+        type: "Backend / Async Processing",
+        description:
+            "A backend job-processing system designed to execute asynchronous tasks reliably. It uses separate API and worker services, with retry and dead-letter mechanisms for failed jobs.",
+
+        technologies: [
+            "Java",
+            "Spring Boot",
+            "PostgreSQL",
+            "RabbitMQ",
+            "Flyway",
+        ],
+
+        repository: "https://github.com/MertDikdas/TaskForge",
+
+        image: null,
+        imageAlt: "",
+
+        highlights: [
+            "Separate API and worker services",
+            "Asynchronous job processing with RabbitMQ",
+            "Retry mechanism for failed jobs",
+            "Dead-letter queue handling for unrecoverable jobs",
+        ],
+
+        architecture:
+            "API Service → RabbitMQ → Worker Service → Retry Queue / Dead-Letter Queue",
     },
 
     {
