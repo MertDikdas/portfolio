@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { Analytics } from "@vercel/analytics/react";
 import "./styles.css";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+    <React.StrictMode>
+        <App />
+        <Analytics />
+    </React.StrictMode>
+);
 
 const projects = [
     {
@@ -402,39 +410,456 @@ function App() {
 
             <main className="page">
                 <div className="content-shell">
-                <div className="container">
+                    <div className="container">
 
-                    {/* HERO */}
-                    <section className="hero section-block" id="home">
-                        <div className="hero-main">
+                        {/* HERO */}
+                        <section className="hero section-block" id="home">
+                            <div className="hero-main">
 
-                            <p className="eyebrow">PORTFOLIO / 2026</p>
-                            <div className="hero-status">
-                                <span className="hero-status-dot" />
-                                <span>Open to software opportunities</span>
+                                <p className="eyebrow">PORTFOLIO / 2026</p>
+                                <div className="hero-status">
+                                    <span className="hero-status-dot" />
+                                    <span>Open to software opportunities</span>
+                                </div>
+                                <h1>Mert</h1>
+
+                                <p className="role">
+                                    Software Developer & Computer Engineering Student
+                                </p>
+
+                                <p className="claim">
+                                    I build practical software products that turn real-world problems
+                                    into usable digital solutions.
+                                </p>
+
+                                <div className="hero-actions">
+                                    <a className="hero-button" href="#projects">
+                                        View My Work
+                                    </a>
+
+                                    <a className="secondary-link" href="#contact">
+                                        Contact
+                                    </a>
+
+                                    <a
+                                        className="secondary-link"
+                                        href="https://github.com/MertDikdas"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        GitHub
+                                    </a>
+
+                                    <a
+                                        className="secondary-link"
+                                        href="https://www.linkedin.com/in/mert-dikdas/"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        LinkedIn
+                                    </a>
+                                    <a
+                                        className="nav-cv"
+                                        href="/Mert-CV.pdf"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        CV ↗
+                                    </a>
+                                </div>
                             </div>
-                            <h1>Mert</h1>
 
-                            <p className="role">
-                                Software Developer & Computer Engineering Student
-                            </p>
+                            <aside className="hero-side">
+                                <div className="hero-meta">
+                                    <span>FOCUS</span>
+                                    <strong>Backend & Software Systems</strong>
+                                </div>
 
-                            <p className="claim">
-                                I build practical software products that turn real-world problems
-                                into usable digital solutions.
-                            </p>
+                                <div className="hero-meta">
+                                    <span>CORE STACK</span>
+                                    <strong>Java / Spring Boot</strong>
+                                </div>
 
-                            <div className="hero-actions">
-                                <a className="hero-button" href="#projects">
-                                    View My Work
-                                </a>
-
-                                <a className="secondary-link" href="#contact">
-                                    Contact
-                                </a>
+                                <div className="hero-meta">
+                                    <span>INTERESTS</span>
+                                    <strong>APIs / Microservices / AI</strong>
+                                </div>
 
                                 <a
-                                    className="secondary-link"
+                                    className="cv-link"
+                                    href="/Mert-CV.pdf"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    View CV ↗
+                                </a>
+                            </aside>
+                        </section>
+
+                        {/* PROJECTS */}
+                        <section
+                            className="projects section-block reveal"
+
+                            id="projects"
+                        >
+                            <p className="eyebrow">SELECTED PROJECTS</p>
+
+                            <h2>Things I've built</h2>
+
+                            <div className="project-list">
+                                {projects.map((project) => {
+                                    const isExpanded =
+                                        expandedProject === project.title;
+
+                                    return (
+                                        <article
+                                            className={`project-card ${isExpanded ? "project-card-expanded" : ""
+                                                } ${!project.image ? "project-card-no-image" : ""}`}
+                                            key={project.title}
+                                            data-project={project.title}
+                                            onClick={() => toggleProject(project.title)}
+                                            style={{
+                                                viewTransitionName: `project-${project.title
+                                                    .toLowerCase()
+                                                    .replace(/\s+/g, "-")}`,
+                                            }}
+                                        >
+
+                                            {project.image && (
+                                                <div
+                                                    className="project-image-wrapper"
+                                                    onClick={(event) => {
+                                                        event.stopPropagation();
+
+                                                        setSelectedImage({
+                                                            src: project.image,
+                                                            alt: project.imageAlt,
+                                                        });
+                                                    }}
+                                                >
+                                                    <img
+                                                        className="project-image"
+                                                        src={project.image}
+                                                        alt={project.imageAlt}
+                                                        loading="lazy"
+                                                    />
+
+                                                    <div className="project-image-overlay">
+                                                        <span>View image ↗</span>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            <div className="project-content">
+                                                <div className="project-header">
+                                                    <div>
+                                                        <h3>{project.title}</h3>
+
+                                                        <span className="project-type">
+                                                            {project.type}
+                                                        </span>
+                                                    </div>
+
+                                                    <button
+                                                        className="expand-button"
+                                                        type="button"
+                                                        aria-label={
+                                                            isExpanded
+                                                                ? `Collapse ${project.title}`
+                                                                : `Expand ${project.title}`
+                                                        }
+                                                        onClick={(event) => {
+                                                            event.stopPropagation();
+                                                            toggleProject(project.title);
+                                                        }}
+                                                    >
+                                                        {isExpanded ? "−" : "+"}
+                                                    </button>
+                                                </div>
+
+                                                <p className="project-description">
+                                                    {project.description}
+                                                </p>
+
+                                                <div className="tech-stack">
+                                                    {project.technologies.map(
+                                                        (technology) => (
+                                                            <span key={technology}>
+                                                                {technology}
+                                                            </span>
+                                                        )
+                                                    )}
+                                                </div>
+
+                                                {isExpanded && (
+                                                    <div className="project-expanded-details">
+
+                                                        <div className="project-detail-block">
+                                                            <span className="project-detail-label">
+                                                                WHAT I BUILT
+                                                            </span>
+
+                                                            <ul className="project-highlights">
+                                                                {project.highlights.map((highlight) => (
+                                                                    <li key={highlight}>
+                                                                        {highlight}
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>
+
+                                                        <div className="project-detail-block">
+                                                            <span className="project-detail-label">
+                                                                ARCHITECTURE
+                                                            </span>
+
+                                                            <p className="project-architecture">
+                                                                {project.architecture}
+                                                            </p>
+                                                        </div>
+
+                                                    </div>
+                                                )}
+
+                                                {project.repository ? (
+                                                    <a
+                                                        className="project-link"
+                                                        href={project.repository}
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                        onClick={(event) =>
+                                                            event.stopPropagation()
+                                                        }
+                                                    >
+                                                        View Repository →
+                                                    </a>
+                                                ) : (
+                                                    <span className="project-link-disabled">
+                                                        Repository coming soon
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </article>
+                                    );
+                                })}
+                            </div>
+                        </section>
+
+                        {/* EXPERIENCE */}
+                        <section
+                            id="experience"
+                            className="experience section-block reveal"
+                        >
+                            <p className="eyebrow">
+                                EXPERIENCE
+                            </p>
+
+                            <h2>
+                                Where I've worked
+                            </h2>
+
+                            <div className="experience-timeline">
+                                {experiences.map((experience) => (
+                                    <article
+                                        className="timeline-item"
+                                        key={`${experience.company}-${experience.period}`}
+                                    >
+                                        <div className="timeline-period">
+                                            {experience.period}
+                                        </div>
+
+                                        <div className="timeline-marker">
+                                            <span />
+                                        </div>
+
+                                        <div className="timeline-content">
+                                            <h3>
+                                                {experience.company}
+                                            </h3>
+
+                                            <p className="timeline-role">
+                                                {experience.role}
+                                            </p>
+
+                                            <p className="timeline-description">
+                                                {experience.description}
+                                            </p>
+                                        </div>
+                                    </article>
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* ABOUT */}
+                        <section
+                            className="about section-block reveal"
+                            id="about"
+                        >
+                            <p className="eyebrow">ABOUT ME</p>
+
+                            <h2>
+                                Building software, understanding systems.
+                            </h2>
+
+                            <p>
+                                I’m a Computer Engineering student focused on
+                                backend development and building practical
+                                software products.
+                            </p>
+
+                            <p>
+                                I mainly work with Java, Spring Boot, Python,
+                                and modern backend technologies. I enjoy
+                                designing APIs, working with microservice
+                                architectures, and understanding how
+                                applications work end to end.
+                            </p>
+                        </section>
+
+                        {/* SKILLS */}
+                        <section
+                            className="skills section-block reveal"
+                            id="skills"
+                        >
+                            <p className="eyebrow">SKILLS</p>
+
+                            <h2>Technologies I work with</h2>
+
+                            <div className="skill-groups">
+                                {skillGroups.map((group) => (
+                                    <div
+                                        className="skill-group"
+                                        key={group.title}
+                                    >
+                                        <h3>{group.title}</h3>
+
+                                        <div className="skill-list">
+                                            {group.skills.map((skill) => (
+                                                <span key={skill}>{skill}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* CONTACT */}
+                        <section
+                            id="contact"
+                            className="contact section-block reveal"
+                        >
+                            <div className="contact-layout">
+
+                                <div className="contact-intro">
+                                    <p className="eyebrow">CONTACT</p>
+
+                                    <h2>Let's build something.</h2>
+
+                                    <p>
+                                        Have a question, an opportunity, or a project in mind?
+                                        Send me a message and I'll get back to you.
+                                    </p>
+
+                                    <div className="contact-links">
+                                        <a
+                                            href="https://github.com/MertDikdas"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            GitHub ↗
+                                        </a>
+
+                                        <a
+                                            href="https://www.linkedin.com/in/mert-dikdas/"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            LinkedIn ↗
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <form
+                                    className="contact-form"
+                                    onSubmit={handleSubmit}
+                                >
+                                    <label>
+                                        <span>Name</span>
+
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            placeholder="Your name"
+                                            value={form.name}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </label>
+
+                                    <label>
+                                        <span>Email</span>
+
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            placeholder="you@example.com"
+                                            value={form.email}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </label>
+
+                                    <label>
+                                        <span>Message</span>
+
+                                        <textarea
+                                            name="message"
+                                            placeholder="Write your message..."
+                                            value={form.message}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </label>
+
+                                    <div className="contact-form-footer">
+                                        <button
+                                            type="submit"
+                                            disabled={isSending}
+                                        >
+                                            {status === "sending" && "Sending..."}
+
+                                            {status === "success" && "Message sent ✓"}
+
+                                            {status !== "sending" &&
+                                                status !== "success" &&
+                                                "Send message →"}
+                                        </button>
+
+                                        {status === "error" && (
+                                            <p className="form-status form-status-error">
+                                                Something went wrong. Please try again.
+                                            </p>
+                                        )}
+                                    </div>
+                                </form>
+
+                            </div>
+                        </section>
+
+                        {/* FOOTER */}
+                        <footer className="footer">
+                            <div>
+                                <p className="footer-name">
+                                    Mert
+                                </p>
+
+                                <p className="footer-role">
+                                    Software Developer & Computer Engineering Student
+                                </p>
+                            </div>
+
+                            <div className="footer-links">
+                                <a
                                     href="https://github.com/MertDikdas"
                                     target="_blank"
                                     rel="noreferrer"
@@ -443,446 +868,28 @@ function App() {
                                 </a>
 
                                 <a
-                                    className="secondary-link"
                                     href="https://www.linkedin.com/in/mert-dikdas/"
                                     target="_blank"
                                     rel="noreferrer"
                                 >
                                     LinkedIn
                                 </a>
+
                                 <a
-                                    className="nav-cv"
                                     href="/Mert-CV.pdf"
                                     target="_blank"
                                     rel="noreferrer"
                                 >
-                                    CV ↗
+                                    CV
                                 </a>
                             </div>
-                        </div>
 
-                        <aside className="hero-side">
-                            <div className="hero-meta">
-                                <span>FOCUS</span>
-                                <strong>Backend & Software Systems</strong>
-                            </div>
-
-                            <div className="hero-meta">
-                                <span>CORE STACK</span>
-                                <strong>Java / Spring Boot</strong>
-                            </div>
-
-                            <div className="hero-meta">
-                                <span>INTERESTS</span>
-                                <strong>APIs / Microservices / AI</strong>
-                            </div>
-
-                            <a
-                                className="cv-link"
-                                href="/Mert-CV.pdf"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                View CV ↗
-                            </a>
-                        </aside>
-                    </section>
-
-                    {/* PROJECTS */}
-                    <section
-                        className="projects section-block reveal"
-
-                        id="projects"
-                    >
-                        <p className="eyebrow">SELECTED PROJECTS</p>
-
-                        <h2>Things I've built</h2>
-
-                        <div className="project-list">
-                            {projects.map((project) => {
-                                const isExpanded =
-                                    expandedProject === project.title;
-
-                                return (
-                                    <article
-                                        className={`project-card ${
-                                            isExpanded ? "project-card-expanded" : ""
-                                        } ${!project.image ? "project-card-no-image" : ""}`}
-                                        key={project.title}
-                                        data-project={project.title}
-                                        onClick={() => toggleProject(project.title)}
-                                        style={{
-                                            viewTransitionName: `project-${project.title
-                                                .toLowerCase()
-                                                .replace(/\s+/g, "-")}`,
-                                        }}
-                                    >
-
-                                        {project.image && (
-                                            <div
-                                                className="project-image-wrapper"
-                                                onClick={(event) => {
-                                                    event.stopPropagation();
-
-                                                    setSelectedImage({
-                                                        src: project.image,
-                                                        alt: project.imageAlt,
-                                                    });
-                                                }}
-                                            >
-                                                <img
-                                                    className="project-image"
-                                                    src={project.image}
-                                                    alt={project.imageAlt}
-                                                    loading="lazy"
-                                                />
-
-                                                <div className="project-image-overlay">
-                                                    <span>View image ↗</span>
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        <div className="project-content">
-                                            <div className="project-header">
-                                                <div>
-                                                    <h3>{project.title}</h3>
-
-                                                    <span className="project-type">
-              {project.type}
-            </span>
-                                                </div>
-
-                                                <button
-                                                    className="expand-button"
-                                                    type="button"
-                                                    aria-label={
-                                                        isExpanded
-                                                            ? `Collapse ${project.title}`
-                                                            : `Expand ${project.title}`
-                                                    }
-                                                    onClick={(event) => {
-                                                        event.stopPropagation();
-                                                        toggleProject(project.title);
-                                                    }}
-                                                >
-                                                    {isExpanded ? "−" : "+"}
-                                                </button>
-                                            </div>
-
-                                            <p className="project-description">
-                                                {project.description}
-                                            </p>
-
-                                            <div className="tech-stack">
-                                                {project.technologies.map(
-                                                    (technology) => (
-                                                        <span key={technology}>
-                {technology}
-              </span>
-                                                    )
-                                                )}
-                                            </div>
-
-                                            {isExpanded && (
-                                                <div className="project-expanded-details">
-
-                                                    <div className="project-detail-block">
-      <span className="project-detail-label">
-        WHAT I BUILT
-      </span>
-
-                                                        <ul className="project-highlights">
-                                                            {project.highlights.map((highlight) => (
-                                                                <li key={highlight}>
-                                                                    {highlight}
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    </div>
-
-                                                    <div className="project-detail-block">
-      <span className="project-detail-label">
-        ARCHITECTURE
-      </span>
-
-                                                        <p className="project-architecture">
-                                                            {project.architecture}
-                                                        </p>
-                                                    </div>
-
-                                                </div>
-                                            )}
-
-                                            {project.repository ? (
-                                                <a
-                                                    className="project-link"
-                                                    href={project.repository}
-                                                    target="_blank"
-                                                    rel="noreferrer"
-                                                    onClick={(event) =>
-                                                        event.stopPropagation()
-                                                    }
-                                                >
-                                                    View Repository →
-                                                </a>
-                                            ) : (
-                                                <span className="project-link-disabled">
-            Repository coming soon
-          </span>
-                                            )}
-                                        </div>
-                                    </article>
-                                );
-                            })}
-                        </div>
-                    </section>
-
-                    {/* EXPERIENCE */}
-                    <section
-                        id="experience"
-                        className="experience section-block reveal"
-                    >
-                        <p className="eyebrow">
-                            EXPERIENCE
-                        </p>
-
-                        <h2>
-                            Where I've worked
-                        </h2>
-
-                        <div className="experience-timeline">
-                            {experiences.map((experience) => (
-                                <article
-                                    className="timeline-item"
-                                    key={`${experience.company}-${experience.period}`}
-                                >
-                                    <div className="timeline-period">
-                                        {experience.period}
-                                    </div>
-
-                                    <div className="timeline-marker">
-                                        <span />
-                                    </div>
-
-                                    <div className="timeline-content">
-                                        <h3>
-                                            {experience.company}
-                                        </h3>
-
-                                        <p className="timeline-role">
-                                            {experience.role}
-                                        </p>
-
-                                        <p className="timeline-description">
-                                            {experience.description}
-                                        </p>
-                                    </div>
-                                </article>
-                            ))}
-                        </div>
-                    </section>
-
-                    {/* ABOUT */}
-                    <section
-                        className="about section-block reveal"
-                        id="about"
-                    >
-                        <p className="eyebrow">ABOUT ME</p>
-
-                        <h2>
-                            Building software, understanding systems.
-                        </h2>
-
-                        <p>
-                            I’m a Computer Engineering student focused on
-                            backend development and building practical
-                            software products.
-                        </p>
-
-                        <p>
-                            I mainly work with Java, Spring Boot, Python,
-                            and modern backend technologies. I enjoy
-                            designing APIs, working with microservice
-                            architectures, and understanding how
-                            applications work end to end.
-                        </p>
-                    </section>
-
-                    {/* SKILLS */}
-                    <section
-                        className="skills section-block reveal"
-                        id="skills"
-                    >
-                        <p className="eyebrow">SKILLS</p>
-
-                        <h2>Technologies I work with</h2>
-
-                        <div className="skill-groups">
-                            {skillGroups.map((group) => (
-                                <div
-                                    className="skill-group"
-                                    key={group.title}
-                                >
-                                    <h3>{group.title}</h3>
-
-                                    <div className="skill-list">
-                                        {group.skills.map((skill) => (
-                                            <span key={skill}>{skill}</span>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    {/* CONTACT */}
-                    <section
-                        id="contact"
-                        className="contact section-block reveal"
-                    >
-                        <div className="contact-layout">
-
-                            <div className="contact-intro">
-                                <p className="eyebrow">CONTACT</p>
-
-                                <h2>Let's build something.</h2>
-
-                                <p>
-                                    Have a question, an opportunity, or a project in mind?
-                                    Send me a message and I'll get back to you.
-                                </p>
-
-                                <div className="contact-links">
-                                    <a
-                                        href="https://github.com/MertDikdas"
-                                        target="_blank"
-                                        rel="noreferrer"
-                                    >
-                                        GitHub ↗
-                                    </a>
-
-                                    <a
-                                        href="https://www.linkedin.com/in/mert-dikdas/"
-                                        target="_blank"
-                                        rel="noreferrer"
-                                    >
-                                        LinkedIn ↗
-                                    </a>
-                                </div>
-                            </div>
-
-                            <form
-                                className="contact-form"
-                                onSubmit={handleSubmit}
-                            >
-                                <label>
-                                    <span>Name</span>
-
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        placeholder="Your name"
-                                        value={form.name}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </label>
-
-                                <label>
-                                    <span>Email</span>
-
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        placeholder="you@example.com"
-                                        value={form.email}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </label>
-
-                                <label>
-                                    <span>Message</span>
-
-                                    <textarea
-                                        name="message"
-                                        placeholder="Write your message..."
-                                        value={form.message}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </label>
-
-                                <div className="contact-form-footer">
-                                    <button
-                                        type="submit"
-                                        disabled={isSending}
-                                    >
-                                        {status === "sending" && "Sending..."}
-
-                                        {status === "success" && "Message sent ✓"}
-
-                                        {status !== "sending" &&
-                                            status !== "success" &&
-                                            "Send message →"}
-                                    </button>
-
-                                    {status === "error" && (
-                                        <p className="form-status form-status-error">
-                                            Something went wrong. Please try again.
-                                        </p>
-                                    )}
-                                </div>
-                            </form>
-
-                        </div>
-                    </section>
-
-                    {/* FOOTER */}
-                    <footer className="footer">
-                        <div>
-                            <p className="footer-name">
-                                Mert
+                            <p className="footer-copy">
+                                © 2026 Mert
                             </p>
+                        </footer>
 
-                            <p className="footer-role">
-                                Software Developer & Computer Engineering Student
-                            </p>
-                        </div>
-
-                        <div className="footer-links">
-                            <a
-                                href="https://github.com/MertDikdas"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                GitHub
-                            </a>
-
-                            <a
-                                href="https://www.linkedin.com/in/mert-dikdas/"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                LinkedIn
-                            </a>
-
-                            <a
-                                href="/Mert-CV.pdf"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                CV
-                            </a>
-                        </div>
-
-                        <p className="footer-copy">
-                            © 2026 Mert
-                        </p>
-                    </footer>
-
-                </div>
+                    </div>
                 </div>
             </main>
             {selectedImage && (
